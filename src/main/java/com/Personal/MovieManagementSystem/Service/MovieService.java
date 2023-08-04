@@ -15,11 +15,12 @@ public class MovieService {
     Connection connection;
     PreparedStatement addStatement = null;
     PreparedStatement getMovieByNameStatement = null;
-    PreparedStatement getMovieByIdStatement  = null;
+    PreparedStatement getMovieByTitleStatement  = null;
     PreparedStatement getAllMovieStatement = null;
     PreparedStatement deleteMovieByTitleStatement = null;
     PreparedStatement getTopRatingMoviesBasedOnGenreStatement = null;
     PreparedStatement updateMovieStatement = null;
+    PreparedStatement getMovieByIdStatement = null;
     @PostConstruct
     public void createTable() {
         String query = "create table if not exists movie(id INT auto_increment primary key, " +
@@ -30,7 +31,8 @@ public class MovieService {
             st.execute(query);
             addStatement = connection.prepareStatement("insert into movie(title,genre,rating) values(?,?,?);");
             getMovieByNameStatement = connection.prepareStatement("select * from movie where name = ?;");
-            getMovieByIdStatement = connection.prepareStatement("select * from movie where title = ?;");
+            getMovieByTitleStatement = connection.prepareStatement("select * from movie where title = ?;");
+            getMovieByIdStatement = connection.prepareStatement("select * from movie where id = ?;");
             getAllMovieStatement = connection.prepareStatement("select * from movie;");
             deleteMovieByTitleStatement = connection.prepareStatement("delete from movie where title = ?;");
             getTopRatingMoviesBasedOnGenreStatement = connection.prepareStatement("" +
@@ -60,8 +62,8 @@ public class MovieService {
 
     public Movie getMovie(String Title){
         try{
-            getMovieByIdStatement.setString(1,Title);
-            ResultSet rs = getMovieByIdStatement.executeQuery();
+            getMovieByTitleStatement.setString(1,Title);
+            ResultSet rs = getMovieByTitleStatement.executeQuery();
             Movie movie = null;
             while(rs.next()){
                 movie = new Movie(rs.getInt(1),rs.getString(2),rs.getString(3), rs.getDouble(4));
@@ -128,5 +130,20 @@ public class MovieService {
             e.printStackTrace();
         }
         return status == 1 ? true:false;
+    }
+
+    public Movie getMovieById(int id) {
+        Movie movie = null;
+        try{
+            getMovieByIdStatement.setInt(1,id);
+            ResultSet rs = getMovieByIdStatement.executeQuery();
+            while(rs.next()){
+                movie = new Movie(rs.getInt(1),rs.getString("title"),rs.getString("genre"),rs.getDouble("rating"));
+            }
+        }
+        catch(SQLException e){
+            e.printStackTrace();
+        }
+        return movie;
     }
 }

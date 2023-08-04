@@ -27,6 +27,12 @@ public class MovieController {
     public List<Movie> getAllMovies(){
         return movieService.getAllMovies();
     }
+
+    @GetMapping(params = {"id"})
+    public ResponseEntity<?> getStudentById(@RequestParam int id) {
+        return new ResponseEntity<>(movieService.getMovieById(id),HttpStatus.OK);
+    }
+
     @GetMapping(path = "genre/{genre}")
     public List<Movie> getMoviesByGenre(@PathVariable("genre") String Genre){
         return movieService.getTopMoviesInEachGenre(Genre);
