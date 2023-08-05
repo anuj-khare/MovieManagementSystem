@@ -2,6 +2,7 @@ package com.Personal.MovieManagementSystem.Controller;
 
 import com.Personal.MovieManagementSystem.Model.Movie;
 import com.Personal.MovieManagementSystem.Service.MovieService;
+import jakarta.validation.Valid;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -16,7 +17,7 @@ public class MovieController {
     @Autowired
     MovieService movieService;
     @PostMapping
-    public ResponseEntity<?> addMovie(@RequestBody Movie movie){
+    public ResponseEntity<?> addMovie(@RequestBody @Valid Movie movie){
         return new ResponseEntity<>(movieService.addMovie(movie),HttpStatus.CREATED);
     }
     @GetMapping(value = "{Title}")
