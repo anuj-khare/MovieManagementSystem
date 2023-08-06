@@ -20,6 +20,6 @@ public class Movie {
     private String title;
     @NotBlank(message="Genre cannot be blank")
     private String genre;
-    @Min(value = 0,message = "Rating cannot be blank")@Max(value = 5,message = "Rating cannot exceed 5.0")
+    @Min(value = 0,message = "Rating cannot be negative")@Max(value = 5,message = "Rating cannot exceed 5.0")
     private Double rating;
 }

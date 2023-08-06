@@ -2,6 +2,8 @@ package com.Personal.MovieManagementSystem.Service;
 
 import com.Personal.MovieManagementSystem.Model.Movie;
 import jakarta.annotation.PostConstruct;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -21,6 +23,7 @@ public class MovieService {
     PreparedStatement getTopRatingMoviesBasedOnGenreStatement = null;
     PreparedStatement updateMovieStatement = null;
     PreparedStatement getMovieByIdStatement = null;
+    Logger logger = LoggerFactory.getLogger(MovieService.class);
     @PostConstruct
     public void createTable() {
         String query = "create table if not exists movie(id INT auto_increment primary key, " +
@@ -41,11 +44,13 @@ public class MovieService {
                     "rating=? where id = ?;");
         }
         catch(Exception e){
-            System.out.println(e.getMessage());
+            logger.error(e.getMessage());
         }
     }
 
     public Movie addMovie(Movie movie){
+
+        logger.info("Adding movie to the database");
         try{
             addStatement.setString(1, movie.getTitle());
             addStatement.setString(2, movie.getGenre());
@@ -54,13 +59,15 @@ public class MovieService {
 
         }
         catch(SQLException e){
-            System.out.println(e.getMessage());
+            logger.error(e.getMessage());
         }
         return movie;
     }
 
 
     public Movie getMovie(String Title){
+
+        logger.info("Fetching Movie by title:{}",Title);
         try{
             getMovieByTitleStatement.setString(1,Title);
             ResultSet rs = getMovieByTitleStatement.executeQuery();
@@ -71,13 +78,14 @@ public class MovieService {
             return movie;
         }
         catch(SQLException e){
-            System.out.println(e.getMessage());
+            logger.error(e.getMessage());
         }
         return null;
     }
 
     public List<Movie> getAllMovies() {
         List<Movie> movieList = new ArrayList<>();
+        logger.info("Fetching all the movies stored in DB");
         try {
             ResultSet rs = getAllMovieStatement.executeQuery();
             while(rs.next()) {
@@ -86,12 +94,13 @@ public class MovieService {
             return movieList;
         }
         catch(SQLException e){
-            e.printStackTrace();
+            logger.error(e.getMessage());
         }
         return movieList;
     }
 
     public List<Movie> getTopMoviesInEachGenre(String genre){
+        logger.info("Fetching 5 best rated movies in the genre:{}",genre);
         List<Movie> movies = new ArrayList<>();
         try{
             getTopRatingMoviesBasedOnGenreStatement.setString(1,genre);
@@ -102,18 +111,19 @@ public class MovieService {
             }
         }
         catch(SQLException e){
-            e.printStackTrace();
+            logger.error(e.getMessage());
         }
         return movies;
     }
     public boolean deleteByTitle(String title){
+        logger.info("Deleting the movie with the title,{}",title);
         int status = 0;
         try{
             deleteMovieByTitleStatement.setString(1,title);
             status = deleteMovieByTitleStatement.executeUpdate();
         }
         catch(SQLException e){
-            e.printStackTrace();
+            logger.error(e.getMessage());
         }
         return status == 1 ? true : false;
     }
