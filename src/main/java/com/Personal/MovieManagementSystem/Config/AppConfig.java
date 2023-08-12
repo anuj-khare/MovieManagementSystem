@@ -14,22 +14,20 @@ import java.sql.DriverManager;
 public class AppConfig {
 
     Logger logger = LoggerFactory.getLogger(AppConfig.class);
-    @Value("${mysql.uri}")
-    private String uri;
-    @Value("${mysql.username}")
-    private String userName;
-    @Value("${mysql.password}")
-    private String password;
-    @Bean("MySqlConnection")
-    @Primary
-    public Connection getMySQLConnection() {
-        Connection connection = null;
-        try {
-            connection = DriverManager.getConnection(uri, userName, password);
-        } catch (Exception e) {
-            logger.error("Error connecting to MYSQL");
-            System.out.println(e.getMessage());
-        }
-        return connection;
-    }
+//    @Value("${mysql.uri}")
+//    private String uri;
+//    @Value("${mysql.username}")
+//    private String userName;
+//    @Value("${mysql.password}")
+//    private String password;
+//    @Bean("MySqlConnection")
+//    public Connection getMySQLConnection() {
+//        Connection connection = null;
+//        try {
+//            connection = DriverManager.getConnection(uri, userName, password);
+//        } catch (Exception e) {
+//            logger.error("Error connecting to MYSQL,Following exception occured : {}"+e.getMessage());
+//        }
+//        return connection;
+//    }
 }

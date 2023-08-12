@@ -1,7 +1,9 @@
 package com.Personal.MovieManagementSystem.Config;
 
+import com.Personal.MovieManagementSystem.Exceptions.ResourceNotFoundException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.http.converter.HttpMessageNotReadableException;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.BindingResultUtils;
 import org.springframework.validation.FieldError;
@@ -23,5 +25,12 @@ public class ControllerAdvice {
         }
         return new ResponseEntity<>(ErrorMap, HttpStatus.BAD_REQUEST);
     }
-
+    @ExceptionHandler(HttpMessageNotReadableException.class)
+    public ResponseEntity<?> handleGenreException(HttpMessageNotReadableException e){
+        return new ResponseEntity<>(e.getMessage(),HttpStatus.BAD_REQUEST);
+    }
+    @ExceptionHandler(ResourceNotFoundException.class)
+    public ResponseEntity<?> handleResourceNotFoundException(ResourceNotFoundException e){
+        return new ResponseEntity<>(e.getMessage(),HttpStatus.BAD_REQUEST);
+    }
 }

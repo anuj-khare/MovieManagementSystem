@@ -1,25 +1,37 @@
 package com.Personal.MovieManagementSystem.Model;
 
 
-import jakarta.validation.constraints.Max;
-import jakarta.validation.constraints.Min;
-import jakarta.validation.constraints.NotBlank;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import com.Personal.MovieManagementSystem.Service.resource.movieResponse;
+import jakarta.persistence.*;
+import lombok.*;
 
 
 @NoArgsConstructor
 @AllArgsConstructor
 @Getter
 @Setter
+@Entity
+@ToString
+@Table(name="movies")
+@Builder
 public class Movie {
-    private Integer id;
-    @NotBlank(message="Title cannot be blank")
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "id", nullable = false)
+    private Long id;
     private String title;
-    @NotBlank(message="Genre cannot be blank")
-    private String genre;
-    @Min(value = 0,message = "Rating cannot be negative")@Max(value = 5,message = "Rating cannot exceed 5.0")
+    @Enumerated(EnumType.STRING)
+//    @Enumerated(EnumType.ORDINAL)  // This saves values in db in the form of enum indices.
+    private Genre genre;
     private Double rating;
+    private String director;
+    public movieResponse toMovieResponse(){
+        return movieResponse.builder()
+                .title(this.title)
+                .rating(this.rating)
+                .genre(this.genre)
+                .build();
+    }
 }
+
+
