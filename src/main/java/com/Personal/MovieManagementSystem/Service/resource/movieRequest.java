@@ -20,7 +20,6 @@ public class movieRequest {
     public Movie getMovieFromRequest(){
         return Movie.builder()
                 .title(this.title)
-                .rating(3.1)
                 .genre(this.genre)
                 .build();
     }

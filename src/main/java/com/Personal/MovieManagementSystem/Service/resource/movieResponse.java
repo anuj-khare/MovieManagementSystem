@@ -2,7 +2,10 @@ package com.Personal.MovieManagementSystem.Service.resource;
 
 import com.Personal.MovieManagementSystem.Model.Genre;
 import com.Personal.MovieManagementSystem.Model.Movie;
+import com.Personal.MovieManagementSystem.Model.Review;
 import lombok.*;
+
+import java.util.List;
 
 @Getter
 @Setter
@@ -13,5 +16,5 @@ public class movieResponse {
     private String title;
     private Genre genre;
     private Double rating;
-
+    private List<Review> reviewList;
 }
