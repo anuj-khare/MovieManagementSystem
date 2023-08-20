@@ -11,5 +11,4 @@ import lombok.*;
 public class reviewResponse {
     private String comment;
     private Double rating;
-    private Movie movie;
 }

@@ -29,7 +29,6 @@ public class Review {
         return reviewResponse.builder()
                 .rating(this.rating)
                 .comment(this.comment)
-                .movie(this.movie)
                 .build();
     }
 }

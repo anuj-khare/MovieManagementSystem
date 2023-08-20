@@ -2,6 +2,7 @@ package com.Personal.MovieManagementSystem.Model;
 
 
 import com.Personal.MovieManagementSystem.Service.resource.movieResponse;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.*;
 

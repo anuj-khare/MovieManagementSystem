@@ -1,7 +1,9 @@
 package com.Personal.MovieManagementSystem;
 
 import com.Personal.MovieManagementSystem.Model.Genre;
+import com.Personal.MovieManagementSystem.Model.MyUser;
 import com.Personal.MovieManagementSystem.Repository.MovieRepository;
+import com.Personal.MovieManagementSystem.Service.MyUserDetailService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
@@ -9,17 +11,14 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 @SpringBootApplication
 public class MovieManagementSystemApplication implements CommandLineRunner {
-
 	@Autowired
-	MovieRepository movieRepository;
+	MyUserDetailService userDetailService;
 	public static void main(String[] args) {
 		SpringApplication.run(MovieManagementSystemApplication.class, args);
 	}
-
 	@Override
 	public void run(String... args) throws Exception {
-		//System.out.println(movieRepository.promotionMovies(Genre.ACTION));
-
-		//System.out.println(movieRepository.genreView(Genre.ACTION.toString()));
+		userDetailService.addUser(new MyUser("John","123","admin"));
+		userDetailService.addUser(new MyUser("Jenny","789","user"));
 	}
 }
