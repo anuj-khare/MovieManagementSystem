@@ -1,6 +1,8 @@
 package com.Personal.MovieManagementSystem.Model;
 
 
+import jakarta.persistence.*;
+import lombok.*;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -10,17 +12,21 @@ import java.util.Arrays;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.stream.Collectors;
-
+@Entity
+@NoArgsConstructor
+@AllArgsConstructor
+@Getter
+@Setter
+@Table(name="users")
+@Builder
 public class MyUser implements UserDetails {
+    @Id
+    @GeneratedValue(strategy=GenerationType.AUTO)
+    private Long id;
     private String userName;
     private String password;
     private String authorities; // USER,ADMIN etc
-    public MyUser(String userName, String password, String authorities){
-        this.userName = userName;
-        this.password = password;
-        this.authorities = authorities;
-    }
-
+    private String hashType;
     public void setPassword(String password) {
         this.password = password;
     }

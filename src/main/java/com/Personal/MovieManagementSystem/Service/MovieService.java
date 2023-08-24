@@ -52,4 +52,8 @@ public class MovieService {
         movieRepository.deleteAllById(movieRepository.findByTitle(Title).stream()
                 .map(x->x.getId()).collect(Collectors.toList()));
     }
+
+    public List<Movie> getTopMovies(Genre genre) {
+        return movieRepository.getTopMovies(genre);
+    }
 }

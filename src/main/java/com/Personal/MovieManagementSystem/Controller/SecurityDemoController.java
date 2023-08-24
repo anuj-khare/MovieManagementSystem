@@ -10,6 +10,6 @@ import org.springframework.web.bind.annotation.RestController;
 public class SecurityDemoController {
     @GetMapping("/greet/{user}")
     public ResponseEntity<?> greetUser(@PathVariable String user){
-        return new ResponseEntity<>("Hello "+user, HttpStatusCode.valueOf(200));
+        return new ResponseEntity<>("Hello : "+user, HttpStatusCode.valueOf(200));
     }
 }

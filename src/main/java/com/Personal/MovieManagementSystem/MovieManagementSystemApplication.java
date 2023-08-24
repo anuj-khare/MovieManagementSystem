@@ -18,7 +18,6 @@ public class MovieManagementSystemApplication implements CommandLineRunner {
 	}
 	@Override
 	public void run(String... args) throws Exception {
-		userDetailService.addUser(new MyUser("John","123","admin"));
-		userDetailService.addUser(new MyUser("Jenny","789","user"));
+
 	}
 }

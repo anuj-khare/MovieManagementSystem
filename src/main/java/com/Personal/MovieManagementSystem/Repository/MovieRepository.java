@@ -15,6 +15,12 @@ public interface MovieRepository extends JpaRepository<Movie,Long>{
     List<Movie> findByTitle(String title);
     //List<Movie> findByDirector(String director);
     List<Movie> findByGenre(Genre genre);
+
+    @Query(value ="Select m from Movie m inner" +
+            " join m.reviewList as r " +
+            "where m.genre=?1 group by m.title order by avg(r.rating) desc")
+    List<Movie> getTopMovies(Genre genre);
+
     //List<Movie> findByRatingAndGenre(Double rating,Genre genre);
 
     //@Query("Select m from Movie m where genre=?1")

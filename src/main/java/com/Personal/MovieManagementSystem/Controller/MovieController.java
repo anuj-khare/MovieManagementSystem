@@ -42,7 +42,10 @@ public class MovieController {
     public ResponseEntity<?> getMoviesByGenre(@PathVariable("genre") Genre Genre){
         return new ResponseEntity<>(movieService.getMoviesByGenre(Genre),HttpStatus.OK);
     }
-
+    @GetMapping(path = "genre/top5/{genre}")
+    public ResponseEntity<?> getTopMoviesInGenre(@PathVariable("genre") Genre Genre){
+        return new ResponseEntity<>(movieService.getTopMovies(Genre),HttpStatus.OK);
+    }
     @DeleteMapping(path = "{Title}")
     public ResponseEntity<?> deleteMovie(@PathVariable("Title") String Title){
         movieService.deleteByTitle(Title);
