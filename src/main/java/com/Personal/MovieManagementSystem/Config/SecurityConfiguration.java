@@ -22,24 +22,30 @@ public class SecurityConfiguration {
         // NoOpPasswordEncoder is a singleton class
     }
     @Bean
-    SecurityFilterChain securityFilterChain(HttpSecurity security) throws Exception {
+    public SecurityFilterChain securityFilterChain(HttpSecurity security) throws Exception {
         //requestMatchers is a functional interface so we are implementing its abstract method in argument
         security.csrf().disable()
                 .authorizeRequests()
                 .requestMatchers(request -> {
-                    return request.getServletPath().equals("/movie/**") && HttpMethod.GET.matches(request.getMethod());
-                }).hasAnyAuthority("admin,user")
-                .requestMatchers(request -> {
-                    return request.getServletPath().equals("/movie") && HttpMethod.POST.matches(request.getMethod());
+                    return request.getServletPath().matches("/movie.*") && HttpMethod.DELETE.matches(request.getMethod());
                 }).hasAuthority("admin")
-                .requestMatchers("/review/**").hasAuthority("user")
-                .requestMatchers("/signup").permitAll()
+                .requestMatchers(request -> {
+                    return request.getServletPath().matches("/movie.*") && HttpMethod.POST.matches(request.getMethod());
+                }).hasAuthority("admin")
+                .requestMatchers(request -> {
+                    return request.getServletPath().matches("/movie.*") && HttpMethod.GET.matches(request.getMethod());
+                }).hasAnyAuthority("admin","user","OAUTH2_USER")
+//                .requestMatchers(HttpMethod.POST,"/movie").hasAuthority("admin")
+                .requestMatchers("/review/**").hasAnyAuthority("user","OAUTH2_USER")
+                .requestMatchers("/signup/**").permitAll()
                 .and().formLogin(new Customizer<FormLoginConfigurer<HttpSecurity>>() {
                     @Override
                     public void customize(FormLoginConfigurer<HttpSecurity> httpSecurityFormLoginConfigurer) {
 
                     }
-                });
+                })
+                .oauth2Login()
+        ;
         return security.build();
     }
 }

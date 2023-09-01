@@ -18,7 +18,7 @@ public interface MovieRepository extends JpaRepository<Movie,Long>{
 
     @Query(value ="Select m from Movie m inner" +
             " join m.reviewList as r " +
-            "where m.genre=?1 group by m.title order by avg(r.rating) desc")
+            "where m.genre=?1 group by m.title order by avg(r.rating) desc limit 5")
     List<Movie> getTopMovies(Genre genre);
 
     //List<Movie> findByRatingAndGenre(Double rating,Genre genre);

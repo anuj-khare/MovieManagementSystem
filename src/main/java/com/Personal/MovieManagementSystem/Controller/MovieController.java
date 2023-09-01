@@ -32,12 +32,6 @@ public class MovieController {
                 .map(x->x.toMovieResponse()).collect(Collectors.toList()), HttpStatus.OK);
     }
 
-
-//    @GetMapping(params = {"id"})
-//    public ResponseEntity<?> getStudentById(@RequestParam int id) {
-//        return new ResponseEntity<>(movieService.,HttpStatus.OK);
-//    }
-
     @GetMapping(path = "genre/{genre}")
     public ResponseEntity<?> getMoviesByGenre(@PathVariable("genre") Genre Genre){
         return new ResponseEntity<>(movieService.getMoviesByGenre(Genre),HttpStatus.OK);
@@ -46,7 +40,7 @@ public class MovieController {
     public ResponseEntity<?> getTopMoviesInGenre(@PathVariable("genre") Genre Genre){
         return new ResponseEntity<>(movieService.getTopMovies(Genre),HttpStatus.OK);
     }
-    @DeleteMapping(path = "{Title}")
+    @DeleteMapping(value = "{Title}")
     public ResponseEntity<?> deleteMovie(@PathVariable("Title") String Title){
         movieService.deleteByTitle(Title);
         return new ResponseEntity<>("Movie(s) with Title : "+Title+" have been deleted",HttpStatus.OK);

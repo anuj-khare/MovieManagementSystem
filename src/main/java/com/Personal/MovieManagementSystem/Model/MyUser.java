@@ -21,7 +21,7 @@ import java.util.stream.Collectors;
 @Builder
 public class MyUser implements UserDetails {
     @Id
-    @GeneratedValue(strategy=GenerationType.AUTO)
+    @GeneratedValue(strategy=GenerationType.IDENTITY)
     private Long id;
     private String userName;
     private String password;
@@ -33,8 +33,9 @@ public class MyUser implements UserDetails {
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
-        if(StringUtils.hasText(authorities))
-        return Arrays.stream(authorities.split(",")).map(x->new SimpleGrantedAuthority(x)).collect(Collectors.toList());
+        if(StringUtils.hasText(authorities)){
+            return Arrays.stream(authorities.split(",")).map(x->new SimpleGrantedAuthority(x)).collect(Collectors.toList());
+        }
         return Collections.emptyList();
         // Output : [ADMIN,USER]
     }
