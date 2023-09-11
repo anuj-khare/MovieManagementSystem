@@ -20,7 +20,6 @@ public interface MovieRepository extends JpaRepository<Movie,Long>{
             " join m.reviewList as r " +
             "where m.genre=?1 group by m.title order by avg(r.rating) desc limit 5")
     List<Movie> getTopMovies(Genre genre);
-
     //List<Movie> findByRatingAndGenre(Double rating,Genre genre);
 
     //@Query("Select m from Movie m where genre=?1")
@@ -33,6 +32,7 @@ public interface MovieRepository extends JpaRepository<Movie,Long>{
     //@Query(value = "Select * from movies where genre = ?",nativeQuery = true)
     //List<Movie> genreView(String genre);
 
+    List<Movie> findAllByOrderByReleaseDate();
 }
 
 

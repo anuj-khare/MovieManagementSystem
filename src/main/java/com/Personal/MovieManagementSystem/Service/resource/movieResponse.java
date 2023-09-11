@@ -5,6 +5,7 @@ import com.Personal.MovieManagementSystem.Model.Movie;
 import com.Personal.MovieManagementSystem.Model.Review;
 import lombok.*;
 
+import java.time.LocalDate;
 import java.util.List;
 
 @Getter
@@ -15,6 +16,6 @@ import java.util.List;
 public class movieResponse {
     private String title;
     private Genre genre;
-    private Double rating;
+    private String releaseDate;
     private List<Review> reviewList;
 }

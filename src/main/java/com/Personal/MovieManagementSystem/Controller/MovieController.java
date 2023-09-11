@@ -21,10 +21,15 @@ public class MovieController {
     public ResponseEntity<?> addMovie(@RequestBody @Valid movieRequest movie){
         return new ResponseEntity<>(movieService.addMovie(movie.getMovieFromRequest()),HttpStatus.CREATED);
     }
+    @GetMapping(value = "/recent")
+    public ResponseEntity<?> getRecentMovies(){
+        return new ResponseEntity<>(movieService.getMoviesForHomePage()
+                .stream().map(Movie::toMovieResponse).collect(Collectors.toList()), HttpStatus.OK);
+    }
     @GetMapping
     public ResponseEntity<?> getAllMovies(){
         return new ResponseEntity<>(movieService.getAllMovies()
-                .stream().map(x->x.toMovieResponse()).collect(Collectors.toList()), HttpStatus.OK);
+                .stream().map(Movie::toMovieResponse).collect(Collectors.toList()), HttpStatus.OK);
     }
     @GetMapping(value = "{Title}")
     public ResponseEntity<?> getMovie(@PathVariable("Title") String Title){

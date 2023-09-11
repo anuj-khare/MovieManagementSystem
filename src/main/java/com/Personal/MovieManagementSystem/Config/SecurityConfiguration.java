@@ -36,7 +36,7 @@ public class SecurityConfiguration {
                     return request.getServletPath().matches("/movie.*") && HttpMethod.GET.matches(request.getMethod());
                 }).hasAnyAuthority("admin","user","OAUTH2_USER")
 //                .requestMatchers(HttpMethod.POST,"/movie").hasAuthority("admin")
-                .requestMatchers("/review/**").hasAnyAuthority("user","OAUTH2_USER")
+                .requestMatchers("/review/**").hasAnyAuthority("user","OAUTH2_USER","admin")
                 .requestMatchers("/signup/**").permitAll()
                 .and().formLogin(new Customizer<FormLoginConfigurer<HttpSecurity>>() {
                     @Override
