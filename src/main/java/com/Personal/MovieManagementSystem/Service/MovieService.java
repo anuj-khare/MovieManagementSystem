@@ -18,10 +18,16 @@ import java.util.stream.Collectors;
 
 @Service
 public class MovieService {
-    @Autowired
     MovieRepository movieRepository;
     @Autowired
+    public void setMovieRepository(MovieRepository movieRepository){
+        this.movieRepository = movieRepository;
+    }
     RedisTemplate redisTemplate;
+    @Autowired
+    public void setRedisTemplate(RedisTemplate redisTemplate){
+        this.redisTemplate = redisTemplate;
+    }
     private final String homepageMovieKey = "Home";
 
     public Movie addMovie(Movie movie){
